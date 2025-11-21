@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>FLX WhatsApp Chat Widget</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .flx-chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #C127C5, #FF477E);
+    color: #fff;
+    border: none;
+    padding: 16px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 99999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+
+  .flx-chat-box {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 340px;
+    height: 420px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    display: none;
+    flex-direction: column;
+    z-index: 99999;
+    overflow: hidden;
+  }
+
+  .flx-chat-header {
+    background: linear-gradient(135deg, #C127C5, #FF477E);
+    color: white;
+    padding: 14px;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .flx-chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: #fafafa;
+  }
+
+  .flx-chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+  }
+
+  .flx-chat-input input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+  }
+
+  .flx-chat-input button {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  .msg-user {
+    background: #C127C5;
+    color: #fff;
+    padding: 8px 12px;
+    margin: 8px 0;
+    width: fit-content;
+    margin-left: auto;
+    border-radius: 12px 12px 0 12px;
+  }
+</style>
+</head>
+
+<body>
+
+<button class="flx-chat-button" onclick="toggleFLXChat()">Chat</button>
+
+<div class="flx-chat-box" id="flxChatBox">
+  <div class="flx-chat-header">Message FLX on WhatsApp</div>
+
+  <div class="flx-chat-messages" id="flxMessages"></div>
+
+  <div class="flx-chat-input">
+    <input type="text" id="flxInput" placeholder="Type your message..." />
+    <button onclick="sendFLXWhatsApp()">Send</button>
+  </div>
+</div>
+
+<script>
+  const chatBox = document.getElementById("flxChatBox");
+  const msgContainer = document.getElementById("flxMessages");
+
+  // 🔥 Replace with YOUR WhatsApp number (no + sign)
+  const phoneNumber = "614XXXXXXXX";
+
+  function toggleFLXChat() {
+    chatBox.style.display = chatBox.style.display === "flex" ? "none" : "flex";
+  }
+
+  function sendFLXWhatsApp() {
+    const input = document.getElementById("flxInput");
+    let text = input.value.trim();
+    if (!text) return;
+
+    msgContainer.innerHTML += `<div class="msg-user">${text}</div>`;
+    msgContainer.scrollTop = msgContainer.scrollHeight;
+
+    const encoded = encodeURIComponent(text);
+    window.open(`https://wa.me/${phoneNumber}?text=${encoded}`, "_blank");
+
+    input.value = "";
+  }
+</script>
+
+</body>
+</html>
